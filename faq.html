@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTAG HUB | FAQ & Ошибки</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass-card {
+      background: rgba(14, 14, 16, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Анимация иконки стрелочки в деталях */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] summary svg {
+      transform: rotate(180deg);
+    }
+    details summary svg {
+      transition: transform 0.25s ease;
+    }
+  </style>
+</head>
+<body class="bg-[#050507] text-neutral-200 font-sans min-h-screen selection:bg-neutral-800 selection:text-white">
+
+  <div class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center pb-6 border-b border-neutral-800">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition">
+          ← Назад
+        </a>
+        <div>
+          <h1 class="text-xl font-bold text-white">База знаний & FAQ</h1>
+          <p class="text-xs text-neutral-400">Частые вопросы, безопасность и устранение сбоев</p>
+        </div>
+      </div>
+
+      <!-- Плашка статуса безопасности -->
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
+        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        Античит: Без рисков
+      </div>
+    </header>
+
+    <!-- Навигационные вкладки разделов -->
+    <nav class="flex gap-2 overflow-x-auto pb-1 text-xs">
+      <a href="index.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Главная
+      </a>
+      <a href="modding.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Моддинг
+      </a>
+      <a href="tweaks.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Оптимизация
+      </a>
+      <a href="faq.html" class="px-4 py-2 rounded-xl bg-white text-black font-semibold shadow-sm">
+        FAQ & Ошибки
+      </a>
+    </nav>
+
+    <!-- Список вопросов-аккордеонов -->
+    <main class="space-y-3 pt-2">
+
+      <!-- Вопрос 1: Баны -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            🛡️ Получу ли я бан за использование модов?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed space-y-2">
+          <p>
+            В публичных лобби со стандартным античитом использование явных чит-модов (полеты, авто-теги, телепорты) ведет к бану по HWID/аккаунту.
+          </p>
+          <p>
+            <strong class="text-neutral-200">Как безопасно:</strong> играйте исключительно в приватных комнатах (мод-лобби), используйте косметические моды без влияния на серверную синхронизацию или играйте в автономных/фанатских клиентах.
+          </p>
+        </div>
+      </details>
+
+      <!-- Вопрос 2: Какой способ легче -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            ⚡ Какой способ установки самый простой для новичка?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed space-y-2">
+          <p>
+            Самый быстрый путь без лишних настроек — установка <strong class="text-neutral-200">готового предпропатченного APK</strong>. Вы просто ставите файл и сразу получаете сборку с меню.
+          </p>
+          <p>
+            Если у вас есть Root-доступ на шлеме, то наиболее гибкий вариант — прямая замена <code class="text-neutral-300 font-mono bg-neutral-900 px-1 py-0.5 rounded">.so</code> файлов через MT Manager прямо в памяти устройства, так как это не требует переустановки всей игры.
+          </p>
+        </div>
+      </details>
+
+      <!-- Вопрос 3: Ошибка доступа к Android/data -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            📁 Проводник не дает доступ к папке Android/data (Access Denied). Что делать?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed space-y-2">
+          <p>
+            В свежих версиях прошивок система блокирует стандартный доступ к директориям <code class="text-neutral-300 font-mono bg-neutral-900 px-1 py-0.5 rounded">/Android/data</code> и <code class="text-neutral-300 font-mono bg-neutral-900 px-1 py-0.5 rounded">/Android/obb</code> из-за системных ограничений Scoped Storage.
+          </p>
+          <p>
+            <strong class="text-neutral-200">Решения:</strong>
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-neutral-400 pl-1">
+            <li>При наличии Root-прав используйте MT Manager в режиме предоставления суперпользователя.</li>
+            <li>При работе без Root подключайте устройство к ПК или телефону и управляйте файлами через консоль ADB или SideQuest.</li>
+            <li>Используйте Shizuku для временного обхода прав без полного рутирования.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Вопрос 4: Вылеты после обновления -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            🔄 Игра вылетает на загрузке после патча. Как починить?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed space-y-2">
+          <p>
+            При выходе официального обновления Gorilla Tag старые смещения (offsets) в библиотеках становятся недействительными, вызывая краш движка Unity при старте.
+          </p>
+          <p>
+            1. Удалите старые модифицированные библиотеки и верните оригинальные файлы.<br>
+            2. Следите за статусом в шапке нашего сайта — как только выходит обновленная версия модов под актуальный патч, скачивайте свежие файлы.
+          </p>
+        </div>
+      </details>
+
+      <!-- Вопрос 5: Нужен ли мощный ПК -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            💻 Нужен ли игровой ПК для установки модов на автономный шлем?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed space-y-2">
+          <p>
+            <strong class="text-neutral-200">Нет, игровой ПК не требуется.</strong> Для автономного моддинга достаточно любого устройства для передачи файлов (ноутбук, офисный ПК или даже Android-смартфон с кабелем Type-C).
+          </p>
+          <p>
+            А если на шлеме уже настроен Root или автономный файловый менеджер, компьютер не нужен вовсе — всё скачивается и ставится прямо в браузере шлема.
+          </p>
+        </div>
+      </details>
+
+      <!-- Вопрос 6: Сброс настроек -->
+      <details class="glass-card rounded-2xl border border-neutral-800/90 group overflow-hidden">
+        <summary class="flex justify-between items-center p-5 cursor-pointer list-none select-none">
+          <span class="text-sm font-semibold text-white group-hover:text-neutral-300 transition">
+            ⚙️ Пропадет ли купленная косметика и предметы в игре?
+          </span>
+          <svg class="w-4 h-4 text-neutral-400 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 pt-1 border-t border-neutral-800/60 text-xs text-neutral-400 leading-relaxed">
+          <p>
+            Официальные скины и Shiny Rocks привязаны к вашей системной учетной записи. Однако при установке некоторых сторонних сборок (модифицированных клиентов с другим именем пакета) прогресс может запускаться с чистого профиля. Рекомендуется не удалять оригинальное приложение, если вы используете сборку со своим Package ID.
+          </p>
+        </div>
+      </details>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTAG HUB | Главная</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.28; transform: scale(1.05); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-glow {
+      animation: pulseGlow 7s ease-in-out infinite;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .glass-card {
+      background: rgba(14, 14, 16, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 35px -10px rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#050507] text-neutral-200 font-sans min-h-screen selection:bg-neutral-800 selection:text-white overflow-x-hidden">
+
+  <!-- Фоновое монохромное свечение -->
+  <div class="fixed top-[-100px] left-1/2 -translate-x-1/2 w-[650px] h-[350px] bg-white/[0.04] blur-[140px] rounded-full pointer-events-none -z-10 animate-glow"></div>
+  <div class="fixed bottom-[-150px] right-[-100px] w-[500px] h-[300px] bg-white/[0.03] blur-[150px] rounded-full pointer-events-none -z-10 animate-glow" style="animation-delay: 2.5s;"></div>
+
+  <div class="max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-8 fade-in">
+
+    <!-- Верхняя навигация -->
+    <header class="flex flex-col sm:flex-row justify-between items-center gap-4 pb-6 border-b border-neutral-800/80">
+      <div>
+        <span class="text-[11px] uppercase tracking-widest text-neutral-400 font-mono font-semibold">Portal</span>
+        <h1 class="text-xl font-black tracking-tight text-white">GORILLA HUB</h1>
+      </div>
+
+      <!-- Главные разделы -->
+      <nav class="flex items-center gap-1.5 p-1 rounded-2xl bg-neutral-900/90 border border-neutral-800 text-xs">
+        <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-white text-black font-semibold shadow-sm transition duration-200">
+          Главная
+        </a>
+        <a href="modding.html" class="px-3.5 py-1.5 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/60 transition duration-200">
+          Моддинг
+        </a>
+        <a href="tweaks.html" class="px-3.5 py-1.5 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/60 transition duration-200">
+          Оптимизация
+        </a>
+        <a href="faq.html" class="px-3.5 py-1.5 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/60 transition duration-200">
+          FAQ & Ошибки
+        </a>
+      </nav>
+    </header>
+
+    <!-- Приветственный Hero-блок -->
+    <section class="glass-card rounded-3xl p-6 sm:p-10 border border-neutral-800 relative overflow-hidden">
+      <div class="space-y-4 max-w-xl">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-neutral-900 text-neutral-300 border border-neutral-700/80">
+          <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+          Хаб туториалов и файлов
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+          Гайды, утилиты и моды в одном месте.
+        </h2>
+        <p class="text-neutral-400 text-sm sm:text-base leading-relaxed">
+          Здесь собраны инструкции из видео: пошаговая установка, готовые команды, решение ошибок и файлы конфигурации.
+        </p>
+
+        <!-- Кнопки перехода в соцсети -->
+        <div class="flex items-center gap-3 pt-2">
+          <a href="https://tiktok.com" target="_blank" class="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-neutral-200 active:scale-95 transition duration-150">
+            TikTok
+          </a>
+          <a href="https://t.me" target="_blank" class="px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 font-medium text-xs hover:text-white hover:border-neutral-700 active:scale-95 transition duration-150">
+            Telegram
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Виджет статуса работы -->
+    <div class="glass-card p-4 rounded-2xl border border-neutral-800 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-70"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+        </span>
+        <div>
+          <span class="text-[10px] font-mono text-neutral-400 uppercase tracking-wider font-semibold">Статус работы</span>
+          <p class="text-xs sm:text-sm font-medium text-neutral-100">Все актуальные методы протестированы и активны</p>
+        </div>
+      </div>
+      <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-neutral-900 text-neutral-300 border border-neutral-800">
+        Без банов
+      </span>
+    </div>
+
+    <!-- Интерактивные разделы -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- Моддинг -->
+      <a href="modding.html" class="glass-card p-6 rounded-2xl border border-neutral-800 group">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">01</span>
+          <span class="text-xs font-mono text-neutral-500 group-hover:text-white transition">Открыть →</span>
+        </div>
+        <h3 class="text-lg font-bold text-white group-hover:text-neutral-200 transition">Раздел: Моддинг</h3>
+        <p class="text-xs text-neutral-400 mt-1 leading-relaxed">
+          Способы установки с Root, ПК, через ADB или готовые APK. Инструкции и ссылки.
+        </p>
+      </a>
+
+      <!-- Оптимизация -->
+      <a href="tweaks.html" class="glass-card p-6 rounded-2xl border border-neutral-800 group">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">02</span>
+          <span class="text-xs font-mono text-neutral-500 group-hover:text-white transition">Открыть →</span>
+        </div>
+        <h3 class="text-lg font-bold text-white group-hover:text-neutral-200 transition">Оптимизация и твики</h3>
+        <p class="text-xs text-neutral-400 mt-1 leading-relaxed">
+          Повышение FPS, разрешение экрана, частота кадров и консольные команды.
+        </p>
+      </a>
+
+      <!-- FAQ & Ошибки -->
+      <a href="faq.html" class="glass-card p-6 rounded-2xl border border-neutral-800 group">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">03</span>
+          <span class="text-xs font-mono text-neutral-500 group-hover:text-white transition">Открыть →</span>
+        </div>
+        <h3 class="text-lg font-bold text-white group-hover:text-neutral-200 transition">База фиксов & FAQ</h3>
+        <p class="text-xs text-neutral-400 mt-1 leading-relaxed">
+          Решение проблем с доступом к Android/data, вылетами и бесконечной загрузкой.
+        </p>
+      </a>
+
+      <!-- Косметика -->
+      <a href="cosmetics.html" class="glass-card p-6 rounded-2xl border border-neutral-800 group">
+        <div class="flex justify-between items-start mb-3">
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400">04</span>
+          <span class="text-xs font-mono text-neutral-500 group-hover:text-white transition">Открыть →</span>
+        </div>
+        <h3 class="text-lg font-bold text-white group-hover:text-neutral-200 transition">Косметика и текстуры</h3>
+        <p class="text-xs text-neutral-400 mt-1 leading-relaxed">
+          Кастомные цвета, текстуры шерсти, кастомизация и пресеты материалов.
+        </p>
+      </a>
+
+    </section>
+
+  </div>
+
+</body>
+</html>

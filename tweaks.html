@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTAG HUB | Оптимизация & ADB Твики</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass-card {
+      background: rgba(14, 14, 16, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-[#050507] text-neutral-200 font-sans min-h-screen selection:bg-neutral-800 selection:text-white">
+
+  <div class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center pb-6 border-b border-neutral-800">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition">
+          ← Назад
+        </a>
+        <div>
+          <h1 class="text-xl font-bold text-white">Оптимизация & ADB Генератор</h1>
+          <p class="text-xs text-neutral-400">Точечная настройка частоты, swapinterval и графики под устройство</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
+        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        ADB Generator v2
+      </div>
+    </header>
+
+    <!-- Вкладки навигации -->
+    <nav class="flex gap-2 overflow-x-auto pb-1 text-xs">
+      <a href="index.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Главная
+      </a>
+      <a href="modding.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Моддинг
+      </a>
+      <a href="tweaks.html" class="px-4 py-2 rounded-xl bg-white text-black font-semibold shadow-sm">
+        Оптимизация
+      </a>
+      <a href="faq.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        FAQ & Ошибки
+      </a>
+    </nav>
+
+    <!-- Главный блок генератора -->
+    <main class="space-y-6">
+
+      <!-- Поле сгенерированной команды -->
+      <section class="glass-card p-5 rounded-2xl border border-neutral-700/80 space-y-3">
+        <div class="flex flex-wrap justify-between items-center gap-2">
+          <span class="text-xs font-mono uppercase tracking-wider text-neutral-400">Итоговая команда:</span>
+          
+          <div class="flex items-center gap-3">
+            <!-- Переключатель adb shell -->
+            <label class="flex items-center gap-2 text-xs text-neutral-300 cursor-pointer select-none">
+              <input type="checkbox" id="chkPrefix" checked onchange="updateCommand()" class="w-3.5 h-3.5 rounded bg-neutral-800 border-neutral-700 accent-white">
+              <span>Добавлять <code class="font-mono text-neutral-200">adb shell</code></span>
+            </label>
+
+            <button id="copyBtn" onclick="copyCommand()" class="px-3 py-1 bg-white hover:bg-neutral-200 active:scale-95 text-black font-semibold text-xs rounded-lg transition duration-150">
+              Копировать
+            </button>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-[#030304] border border-neutral-800 font-mono text-xs overflow-x-auto">
+          <code id="outputCode" class="text-neutral-100 whitespace-nowrap">...</code>
+        </div>
+
+        <div id="deviceHint" class="text-[11px] text-neutral-400 flex items-center gap-2">
+          <!-- Информационная подсказка о текущем режиме -->
+        </div>
+      </section>
+
+      <!-- Выбор модели шлема -->
+      <section class="glass-card p-5 rounded-2xl border border-neutral-800 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-sm font-semibold text-white">Модель устройства</span>
+          <span class="text-xs font-mono text-neutral-500">Hardware Profile</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" onclick="setDevice('quest3', this)" class="device-btn py-3 px-4 rounded-xl text-xs font-semibold bg-white text-black text-left flex flex-col gap-0.5 border border-white">
+            <span class="font-bold text-sm">Meta Quest 3 / 3S</span>
+            <span class="text-[11px] opacity-75 font-normal">Для 60 FPS требует 120Hz + Swapinterval 2</span>
+          </button>
+          <button type="button" onclick="setDevice('quest2', this)" class="device-btn py-3 px-4 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white text-left flex flex-col gap-0.5">
+            <span class="font-bold text-sm">Meta Quest 2</span>
+            <span class="text-[11px] opacity-75 font-normal">Поддерживает прямую команду 60Hz</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Сетка параметров -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Герцовка (Refresh Rate) -->
+        <div class="glass-card p-5 rounded-2xl border border-neutral-800/80 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-semibold text-white">Частота кадров / Герцовка</span>
+            <span class="text-xs font-mono text-neutral-500">Target Hz</span>
+          </div>
+          <p class="text-xs text-neutral-400">Частота обновления дисплея шлема.</p>
+          <div class="grid grid-cols-5 gap-1.5 pt-1">
+            <button type="button" onclick="setHz('default', this)" class="hz-btn py-2 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white">Авто</button>
+            <button type="button" onclick="setHz('60', this)" class="hz-btn py-2 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white">60 Hz</button>
+            <button type="button" onclick="setHz('72', this)" class="hz-btn py-2 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white">72 Hz</button>
+            <button type="button" onclick="setHz('90', this)" class="hz-btn py-2 rounded-xl text-xs font-medium bg-white text-black font-semibold">90 Hz</button>
+            <button type="button" onclick="setHz('120', this)" class="hz-btn py-2 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white">120 Hz</button>
+          </div>
+        </div>
+
+        <!-- Swap Interval -->
+        <div class="glass-card p-5 rounded-2xl border border-neutral-800/80 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-semibold text-white">Swap Interval (Делитель кадров)</span>
+            <span class="text-xs font-mono text-neutral-500">V-Sync Step</span>
+          </div>
+          <p class="text-xs text-neutral-400">1 = каждый кадр, 2 = отображать каждый 2-й кадр дисплея.</p>
+          <select id="swapSelect" onchange="updateCommand()" class="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 text-xs rounded-xl p-2.5 outline-none focus:border-neutral-500 transition">
+            <option value="auto" selected>Авто (зависит от выбранной герцовки)</option>
+            <option value="1">1 (Каждый такт — 1:1)</option>
+            <option value="2">2 (Делить частоту дисплея на 2)</option>
+            <option value="off">Не задавать вручную</option>
+          </select>
+        </div>
+
+        <!-- Разрешение текстур -->
+        <div class="glass-card p-5 rounded-2xl border border-neutral-800/80 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-semibold text-white">Разрешение текстур</span>
+            <span class="text-xs font-mono text-neutral-500">Texture Size</span>
+          </div>
+          <p class="text-xs text-neutral-400">Повышает четкость картинки и дальность прорисовки.</p>
+          <select id="resSelect" onchange="updateCommand()" class="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 text-xs rounded-xl p-2.5 outline-none focus:border-neutral-500 transition">
+            <option value="default">По умолчанию</option>
+            <option value="1536">1536 px (Сбалансированное)</option>
+            <option value="2048" selected>2048 px (Высокая четкость)</option>
+            <option value="2560">2560 px (Максимальное качество)</option>
+          </select>
+        </div>
+
+        <!-- Уровни CPU/GPU -->
+        <div class="glass-card p-5 rounded-2xl border border-neutral-800/80 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-semibold text-white">Производительность (CPU / GPU)</span>
+            <span class="text-xs font-mono text-neutral-500">Clocks</span>
+          </div>
+          <p class="text-xs text-neutral-400">Фиксирует частоты железа, исключая статтеры.</p>
+          <select id="perfSelect" onchange="updateCommand()" class="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 text-xs rounded-xl p-2.5 outline-none focus:border-neutral-500 transition">
+            <option value="default">Авто (Энергосбережение)</option>
+            <option value="high" selected>Уровень 4 (Стабильный FPS)</option>
+            <option value="turbo">Уровень 5 (Максимальный разгон)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Дополнительные чекбоксы -->
+      <section class="glass-card p-5 rounded-2xl border border-neutral-800 space-y-3">
+        <span class="text-xs font-mono uppercase tracking-wider text-neutral-400 block">Быстрые переключатели</span>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-neutral-900/60 border border-neutral-800/80 cursor-pointer hover:border-neutral-700 transition">
+            <input type="checkbox" id="chkGuardian" onchange="updateCommand()" class="w-4 h-4 rounded bg-neutral-800 border-neutral-700 accent-white">
+            <div>
+              <span class="text-xs font-semibold text-white block">Отключить Guardian</span>
+              <span class="text-[11px] text-neutral-400">Убирает защитную сетку</span>
+            </div>
+          </label>
+
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-neutral-900/60 border border-neutral-800/80 cursor-pointer hover:border-neutral-700 transition">
+            <input type="checkbox" id="chkSquareCapture" onchange="updateCommand()" class="w-4 h-4 rounded bg-neutral-800 border-neutral-700 accent-white">
+            <div>
+              <span class="text-xs font-semibold text-white block">Запись в 16:9</span>
+              <span class="text-[11px] text-neutral-400">1920x1080 для TikTok</span>
+            </div>
+          </label>
+
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-neutral-900/60 border border-neutral-800/80 cursor-pointer hover:border-neutral-700 transition">
+            <input type="checkbox" id="chkBitrate" checked onchange="updateCommand()" class="w-4 h-4 rounded bg-neutral-800 border-neutral-700 accent-white">
+            <div>
+              <span class="text-xs font-semibold text-white block">Битрейт 30 Mbps</span>
+              <span class="text-[11px] text-neutral-400">Запись без сжатия</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    let selectedDevice = 'quest3';
+    let currentHz = '90';
+
+    function setDevice(device, btn) {
+      selectedDevice = device;
+      document.querySelectorAll('.device-btn').forEach(b => {
+        b.className = 'device-btn py-3 px-4 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white text-left flex flex-col gap-0.5 transition';
+      });
+      btn.className = 'device-btn py-3 px-4 rounded-xl text-xs font-semibold bg-white text-black text-left flex flex-col gap-0.5 border border-white transition';
+      updateCommand();
+    }
+
+    function setHz(val, btn) {
+      currentHz = val;
+      document.querySelectorAll('.hz-btn').forEach(b => {
+        b.className = 'hz-btn py-2 rounded-xl text-xs font-medium bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition';
+      });
+      btn.className = 'hz-btn py-2 rounded-xl text-xs font-medium bg-white text-black font-semibold transition';
+      updateCommand();
+    }
+
+    function updateCommand() {
+      const cmds = [];
+      const hint = document.getElementById('deviceHint');
+      const swapSelectVal = document.getElementById('swapSelect').value;
+
+      // 1. Логика Герцовки и Swap Interval
+      if (currentHz === '60') {
+        if (selectedDevice === 'quest3') {
+          // Quest 3 / 3S не принимают setprop 60hz напрямую в новых прошивках
+          cmds.push('setprop debug.oculus.refreshRate 120');
+          if (swapSelectVal === 'auto' || swapSelectVal === '2') {
+            cmds.push('setprop debug.oculus.swapinterval 2');
+            hint.innerHTML = '⚙️ <b>Quest 3/3S:</b> Применена связка 120 Hz + Swapinterval 2 для честных 60 FPS.';
+          } else if (swapSelectVal !== 'off') {
+            cmds.push(`setprop debug.oculus.swapinterval ${swapSelectVal}`);
+            hint.innerHTML = '⚙️ <b>Quest 3/3S:</b> Установлена частота 120 Hz с пользовательским Swapinterval.';
+          }
+        } else {
+          // Quest 2
+          cmds.push('setprop debug.oculus.refreshRate 60');
+          if (swapSelectVal === '2') cmds.push('setprop debug.oculus.swapinterval 2');
+          else if (swapSelectVal === '1') cmds.push('setprop debug.oculus.swapinterval 1');
+          hint.innerHTML = '⚙️ <b>Quest 2:</b> Применена прямая команда 60 Hz.';
+        }
+      } else if (currentHz !== 'default') {
+        cmds.push(`setprop debug.oculus.refreshRate ${currentHz}`);
+        if (swapSelectVal === '2') {
+          cmds.push('setprop debug.oculus.swapinterval 2');
+          hint.innerHTML = `⚙️ Установлено ${currentHz} Hz с половинным выводом кадров (Swapinterval 2).`;
+        } else if (swapSelectVal === '1') {
+          cmds.push('setprop debug.oculus.swapinterval 1');
+          hint.innerHTML = `⚙️ Установлено прямое отображение 1:1 при ${currentHz} Hz.`;
+        } else {
+          hint.innerHTML = `⚙️ Выбрана частота ${currentHz} Hz.`;
+        }
+      } else {
+        if (swapSelectVal !== 'auto' && swapSelectVal !== 'off') {
+          cmds.push(`setprop debug.oculus.swapinterval ${swapSelectVal}`);
+        }
+        hint.innerHTML = '⚙️ Стандартная частота дисплея.';
+      }
+
+      // 2. Разрешение текстур
+      const res = document.getElementById('resSelect').value;
+      if (res !== 'default') {
+        cmds.push(`setprop debug.oculus.textureWidth ${res}`);
+        cmds.push(`setprop debug.oculus.textureHeight ${res}`);
+      }
+
+      // 3. CPU / GPU
+      const perf = document.getElementById('perfSelect').value;
+      if (perf === 'high') {
+        cmds.push('setprop debug.oculus.cpuLevel 4');
+        cmds.push('setprop debug.oculus.gpuLevel 4');
+      } else if (perf === 'turbo') {
+        cmds.push('setprop debug.oculus.cpuLevel 5');
+        cmds.push('setprop debug.oculus.gpuLevel 5');
+      }
+
+      // 4. Guardian
+      if (document.getElementById('chkGuardian').checked) {
+        cmds.push('setprop debug.oculus.guardian_pause 1');
+      }
+
+      // 5. Запись 16:9
+      if (document.getElementById('chkSquareCapture').checked) {
+        cmds.push('setprop debug.oculus.capture.width 1920');
+        cmds.push('setprop debug.oculus.capture.height 1080');
+      }
+
+      // 6. Битрейт
+      if (document.getElementById('chkBitrate').checked) {
+        cmds.push('setprop debug.oculus.capture.bitrate 30000000');
+      }
+
+      // Формирование итоговой строки
+      const out = document.getElementById('outputCode');
+      const usePrefix = document.getElementById('chkPrefix').checked;
+
+      if (cmds.length === 0) {
+        out.textContent = '# Выберите хотя бы один параметр';
+        return;
+      }
+
+      if (usePrefix) {
+        out.textContent = 'adb shell "' + cmds.join(' && ') + '"';
+      } else {
+        out.textContent = cmds.join(' && ');
+      }
+    }
+
+    function copyCommand() {
+      const text = document.getElementById('outputCode').textContent;
+      if (!text.startsWith('#')) {
+        navigator.clipboard.writeText(text);
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Скопировано!';
+        setTimeout(() => {
+          btn.textContent = 'Копировать';
+        }, 1500);
+      }
+    }
+
+    // Первый запуск при рендере
+    updateCommand();
+  </script>
+
+</body>
+</html>

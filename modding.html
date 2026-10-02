@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTAG HUB | Моддинг</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass-card {
+      background: rgba(14, 14, 16, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .glass-card:hover {
+      box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#050507] text-neutral-200 font-sans min-h-screen selection:bg-neutral-800 selection:text-white">
+
+  <div class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+
+    <!-- Header -->
+    <header class="flex justify-between items-center pb-6 border-b border-neutral-800">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-2 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition">
+          ← Назад
+        </a>
+        <div>
+          <h1 class="text-xl font-bold text-white">Каталог способов моддинга</h1>
+          <p class="text-xs text-neutral-400">Выберите подходящую категорию</p>
+        </div>
+      </div>
+      
+      <!-- Статус работы -->
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-xs font-mono text-neutral-300">
+        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        Статус: Активно
+      </div>
+    </header>
+
+    <!-- Вкладки по методам -->
+    <nav class="flex gap-2 overflow-x-auto pb-1 text-xs">
+      <a href="modding.html" class="px-4 py-2 rounded-xl bg-white text-black font-semibold shadow-sm">
+        Все способы
+      </a>
+      <a href="modding-root.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        С Root
+      </a>
+      <a href="modding-pc.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        С ПК
+      </a>
+      <a href="modding-adb.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        С ADB
+      </a>
+      <a href="modding-apk.html" class="px-4 py-2 rounded-xl glass-card border border-neutral-800 text-neutral-400 hover:text-white">
+        Готовые APK
+      </a>
+    </nav>
+
+    <!-- Контейнер для твоих гайдов -->
+    <main id="guides-container" class="space-y-4 pt-2">
+      <!-- Гайды будут добавляться сюда -->
+    </main>
+
+  </div>
+
+</body>
+</html>
